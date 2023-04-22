@@ -83,11 +83,15 @@ namespace WallPaper.ViewModel
             if (File.Exists(DataFile))
             {
                 CurStatus= serializer.Deserialize(DataFile);
-                VideoFilePreviews = utility.CombineVideoFilePreview(CurStatus.CurrentDir);
-                //待选：直接将读入的cur_file设置为壁纸,同时初始化按钮信息。
-                //若不存在文件，则不运行。
-                SelectedPreview.FileName = CurStatus.CurrentFile;
-                WallPaperSet();
+                if (CurStatus.CurrentDir != null || CurStatus.CurrentFile != null)
+                {
+                    VideoFilePreviews = utility.CombineVideoFilePreview(CurStatus.CurrentDir);
+                    //待选：直接将读入的cur_file设置为壁纸,同时初始化按钮信息。
+                    //若不存在文件，则不运行。
+                    SelectedPreview.FileName = CurStatus.CurrentFile;
+                    WallPaperSet();
+                }
+                
             }
         }
         /*

@@ -36,5 +36,10 @@ namespace WallPaper
             //这是因为InitializeComponent()方法会加载XAML文件并创建控件，如果您在调用InitializeComponent()方法之后设置DataContext属性，那么在XAML文件中定义的绑定可能无法正确解析源。
             InitializeComponent();
         }
+        private void HyperlinkClick(object sender, RoutedEventArgs e)
+        {
+            Hyperlink link = sender as Hyperlink;
+            Process.Start(new ProcessStartInfo(link.NavigateUri.AbsoluteUri));
+        }
     }
 }

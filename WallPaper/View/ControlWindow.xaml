@@ -83,24 +83,19 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <TextBlock >
-                    github:
-                        <Hyperlink NavigateUri="https://github.com/DE009">DE009</Hyperlink>
-
-                    </TextBlock>
-                    <TextBlock >
-                    mysite
-                        <Hyperlink NavigateUri="https://de009.top">DE009</Hyperlink>
-                    </TextBlock>
+                    <Image Source="/View/github.ico" Height="30" Width="30"/>
+                    <TextBlock Width="41" ><Hyperlink Click="HyperlinkClick" NavigateUri="https://github.com/DE009"><Run Text="Github"/></Hyperlink></TextBlock>
+                    <Image Source="/View/cropped-xllicon-32x32.png" Height="30" Width="30"/>
+                    <TextBlock ><Hyperlink Click="HyperlinkClick" NavigateUri="https://www.de009.top"><Run Text="DE009's Site"/></Hyperlink></TextBlock>
                 </StackPanel>
-                
+
             </Grid>
             <Grid Grid.Row="1">
                 <Button Name="Start" Content="{Binding ButtonText}" Command="{Binding WindowControl}" Height="50" Width="100" VerticalAlignment="Bottom" Margin="0,0,0,60"  />
             </Grid>
-            
+
             <!--<Button Name="Close" Content="关闭" Command="{Binding WindowClose }" Height="50" Width="100" VerticalAlignment="Bottom" Margin="0,0,0,50" />-->
-            
+
         </Grid>
     </Grid>
 </Window>
