@@ -42,16 +42,22 @@ namespace WallPaper.ViewModel
         private const String DataFile=".\\Data.bin";    //数据存储位置
         private const String ButtonRunning = "⏸停止壁纸";
         private const String ButtonStoped = "▶设为壁纸";
+        private const String AutoRunSeted = "取消开机自启";
+        private const String AutoRunNotSeted = "设定开机自启";
         private String _button_text=ButtonStoped;
         private Boolean _control_visibility = true;
         public int exit_reason=0;
         private int _button_status = 0;
+        private String _auto_button_text;
+
+
 
         
         //初始化工具类
         private Utility.IO utility = new Utility.IO();
         private Utility.WallPaper windowcontrol = new Utility.WallPaper();
         private Utility.Serializer<CurrentStatus> serializer = new Utility.Serializer<CurrentStatus>();
+        private Utility.AutoRun auto_run = new Utility.AutoRun();
         //初始化ICommand
         public ICommand PathSelect { get; set; }
         public ICommand WindowClose { get; set; }
@@ -67,6 +73,18 @@ namespace WallPaper.ViewModel
                 OnPropertyChanged("WindowControl");
             }
             }
+        private ICommand _auto_run;
+        public ICommand SetAutoRun { set; get; }
+        public ICommand UnSetAutoRun { set; get; }
+        public ICommand AutoRunControl
+        {
+            get { return _auto_run; }
+            set
+            {
+                this._auto_run = value;
+                OnPropertyChanged("AutoRunControl");
+            }
+        }
         /* 
          * 构造方法，初始化
          */
@@ -79,6 +97,10 @@ namespace WallPaper.ViewModel
             ControlExit = new RelayCommand(ControlExited);
             ControlExiting = new RelayCommand<CancelEventArgs>(ControlWindowExiting);
             WindowControl = WindowSet;
+            SetAutoRun = new RelayCommand(SetAutoRunF);
+            UnSetAutoRun = new RelayCommand(UnSetAutoRunF);
+            
+            
             //页面初始化
             if (File.Exists(DataFile))
             {
@@ -91,7 +113,17 @@ namespace WallPaper.ViewModel
                     SelectedPreview.FileName = CurStatus.CurrentFile;
                     WallPaperSet();
                 }
-                
+            }
+            //自启按钮初始化
+            if (auto_run.IsAutoStartSet())
+            {
+                AutoRunControl = UnSetAutoRun;
+                AutoRunButtonText = AutoRunSeted;
+            }
+            else
+            {
+                AutoRunControl = SetAutoRun;
+                AutoRunButtonText = AutoRunNotSeted;
             }
         }
         /*
@@ -152,6 +184,15 @@ namespace WallPaper.ViewModel
         public int ButtonStatus
         {
             get { return this._button_status;  }
+        }
+        public String AutoRunButtonText
+        {
+            get { return this._auto_button_text; }
+            set
+            {
+                this._auto_button_text = value;
+                OnPropertyChanged("AutoRunButtonText");
+            }
         }
 
         /*
@@ -230,6 +271,44 @@ namespace WallPaper.ViewModel
                 return;
             }
         }
+        /// <summary>
+        /// 取消开机自启
+        /// </summary>
+        private void UnSetAutoRunF()
+        {
+            if (auto_run.SetMeStart(false))
+            {
+                AutoRunButtonText = AutoRunNotSeted;
+                AutoRunControl = SetAutoRun;
+                System.Windows.MessageBox.Show("开机自启设置成功");
+            }
+            else
+            {
+                return;
+            }
+            
+        }
+        /// <summary>
+        /// 设置开机自启
+        /// </summary>
+        private void SetAutoRunF()
+        {
+            if (auto_run.SetMeStart(true))
+            {
+                System.Windows.MessageBox.Show("开机自启设置成功");
+                AutoRunButtonText = AutoRunSeted;
+                AutoRunControl = UnSetAutoRun;
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("设置失败，注意以管理员身份启动程序");
+                return;
+            }
+           
+            
+            
+        }
+
 
 
         /*
@@ -246,6 +325,8 @@ namespace WallPaper.ViewModel
                 
             }
         }
+
+
         /*
          * 控制Button内容和触发函数修改，避免窗口隐藏时，因修改内容而重新显示
          */

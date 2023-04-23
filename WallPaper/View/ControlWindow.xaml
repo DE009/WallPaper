@@ -78,8 +78,8 @@
 
         <Grid Grid.Column="1" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.7*"/>
-                <RowDefinition Height="0.3*"/>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.4*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -91,10 +91,15 @@
 
             </Grid>
             <Grid Grid.Row="1">
-                <Button Name="Start" Content="{Binding ButtonText}" Command="{Binding WindowControl}" Height="50" Width="100" VerticalAlignment="Bottom" Margin="0,0,0,60"  />
+                <StackPanel>
+                    <Button Name="Start" Content="{Binding ButtonText}" Command="{Binding WindowControl}" Height="50" Width="100" VerticalAlignment="Bottom" Margin="0,20,0,10"  />
+                    <Button Name="Close" Content="{Binding AutoRunButtonText}" Command="{Binding AutoRunControl }" Height="50" Width="100" VerticalAlignment="Bottom" Margin="0,10,0,10" />
+                </StackPanel>
+                
+                
             </Grid>
 
-            <!--<Button Name="Close" Content="关闭" Command="{Binding WindowClose }" Height="50" Width="100" VerticalAlignment="Bottom" Margin="0,0,0,50" />-->
+            
 
         </Grid>
     </Grid>

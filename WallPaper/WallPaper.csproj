@@ -98,6 +98,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Utility\AutoRun.cs" />
     <Compile Include="Utility\EnumVar.cs" />
     <Compile Include="ViewModel\notifyIcon.cs" />
     <Compile Include="Utility\Serialize.cs" />
