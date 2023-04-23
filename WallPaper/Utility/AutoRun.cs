@@ -67,7 +67,7 @@ namespace WallPaper.Utility
             {
                 bool _exist = false;
                 RegistryKey local = Registry.LocalMachine;
-                RegistryKey runs = local.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+                RegistryKey runs = local.OpenSubKey(@"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run", true);
                 if (runs == null)
                 {
                     RegistryKey key2 = local.CreateSubKey("SOFTWARE");
@@ -107,7 +107,7 @@ namespace WallPaper.Utility
             try
             {
                 RegistryKey local = Registry.LocalMachine;
-                RegistryKey key = local.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+                RegistryKey key = local.OpenSubKey(@"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run", true);
                 if (key == null)
                 {
                     local.CreateSubKey("SOFTWARE//Microsoft//Windows//CurrentVersion//Run");

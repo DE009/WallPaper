@@ -37,9 +37,10 @@ namespace WallPaper.ViewModel
         private List<VideoFilePreview> _video_previews = new List<VideoFilePreview>();  //中间变量用于返回图像和文件名
 
         //中间变量
+        private String CurrentDir = AppDomain.CurrentDomain.BaseDirectory;
         private VideoFilePreview _selected_previews= new VideoFilePreview();
         private Window WallPaper;
-        private const String DataFile=".\\Data.bin";    //数据存储位置
+        private const String DataFile= ".\\Data.bin";    //数据存储位置
         private const String ButtonRunning = "⏸停止壁纸";
         private const String ButtonStoped = "▶设为壁纸";
         private const String AutoRunSeted = "取消开机自启";
@@ -102,9 +103,9 @@ namespace WallPaper.ViewModel
             
             
             //页面初始化
-            if (File.Exists(DataFile))
+            if (File.Exists(CurrentDir + DataFile))
             {
-                CurStatus= serializer.Deserialize(DataFile);
+                CurStatus= serializer.Deserialize(CurrentDir + DataFile);
                 if (CurStatus.CurrentDir != null || CurStatus.CurrentFile != null)
                 {
                     VideoFilePreviews = utility.CombineVideoFilePreview(CurStatus.CurrentDir);
